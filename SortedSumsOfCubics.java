@@ -5,42 +5,20 @@ public class SortedSumsOfCubics{
 	public static void SortedSumsOfCubics(int n){
 		Heap heap = new Heap();
 
-
-		heap.insert(1,4);
-		int temp = heap.top();
-		//System.out.println(temp);
-		heap.insert(2,0);
-		temp = heap.top();
-		//System.out.println(temp);
-		heap.insert(3,0);
-		temp = heap.top();
-		//	System.out.println(temp);
-		heap.insert(66,0);
-		temp = heap.top();
-		//	System.out.println(temp);
-		heap.insert(87,0);
-		temp = heap.top();
-		//	System.out.println(temp);
-		heap.insert(55,0);
-		temp = heap.top();
-		//	System.out.println(temp);
-		heap.insert(5,4);
-		temp = heap.top();
-		//	System.out.println(temp);
-		heap.insert(0,0);
-		temp = heap.top();
-		//System.out.println(temp);
-
+		for(int i = 0;i <= n;i++){
+			heap.insert(i,0);
+		}
+		int temp = 0;
 		while(!(heap.isEmpty())){
 			temp = heap.top();
 			System.out.println(temp);
 			heap.delete();
 		}
 	}
-	
+
 	public static void main(String[] args){
 		//we will have to check for a file first and if none is given then go to command line input
-		int n = 15;
+		int n = 510;
 		SortedSumsOfCubics(n);
 	}
 }
@@ -125,7 +103,7 @@ class Heap{
 	//returns the index of which child is the smaller child, returns the same index if there are no children
 	private int get_min_child(int i){
 		Element temp_parent = heap.get(i);
-		if(2*i+2 < heap.size()-1){
+		if(2*i+2 < heap.size()){
 			Element left_child = heap.get(2*i+1);
 			Element right_child = heap.get(2*i+2);
 			if(get_value(left_child) < get_value(right_child)){
