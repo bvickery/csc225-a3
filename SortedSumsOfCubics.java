@@ -1,4 +1,11 @@
+/*  SortedSumsOfCubics.java
+	csc 225 Summer 2016
+	Brandon Vickery
+	07/02/16
+*/
 import java.util.ArrayList;
+import java.io.File;
+import java.util.Scanner;
 
 public class SortedSumsOfCubics{
 	
@@ -13,7 +20,7 @@ public class SortedSumsOfCubics{
 
 			int a = heap.get_a();
 			int b = heap.get_b();
-			if(b <= a){
+			if(b < a){
 				temp = heap.top();
 				System.out.println(temp);
 				heap.delete();
@@ -30,7 +37,20 @@ public class SortedSumsOfCubics{
 
 	public static void main(String[] args){
 		//we will have to check for a file first and if none is given then go to command line input
-		int n = 3;
+		Scanner s;
+		if (args.length > 0){
+			try{
+				s = new Scanner(new File(args[0]));
+			} catch(java.io.FileNotFoundException e){
+				System.out.printf("Unable to open %s\n",args[0]);
+				return;
+			}
+			System.out.printf("Reading value for n from %s.\n",args[0]);
+		}else{
+			s = new Scanner(System.in);
+			System.out.printf("Enter A non-negative integer.\n");
+		}
+		int n = s.nextInt();
 		SortedSumsOfCubics(n);
 	}
 }
