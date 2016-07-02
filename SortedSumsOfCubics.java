@@ -10,15 +10,27 @@ public class SortedSumsOfCubics{
 		}
 		int temp = 0;
 		while(!(heap.isEmpty())){
-			temp = heap.top();
-			System.out.println(temp);
-			heap.delete();
+
+			int a = heap.get_a();
+			int b = heap.get_b();
+			if(b <= a){
+				temp = heap.top();
+				System.out.println(temp);
+				heap.delete();
+				if(b < n){
+					heap.insert(a,b+1);					
+				}
+			}else{
+				temp = heap.top();
+				System.out.println(temp);
+				heap.delete();				
+			}
 		}
 	}
 
 	public static void main(String[] args){
 		//we will have to check for a file first and if none is given then go to command line input
-		int n = 510;
+		int n = 3;
 		SortedSumsOfCubics(n);
 	}
 }
@@ -37,6 +49,18 @@ class Heap{
         Element(){}
     }
 	
+	public int get_a(){
+		Element temp = heap.get(0);
+		int a = temp.a;
+		return a;
+	}
+	
+	public int get_b(){
+		Element temp = heap.get(0);
+		int b = temp.b;
+		return b;
+	}
+	
     public boolean isEmpty(){
 		return heap.isEmpty();
     }
@@ -48,6 +72,7 @@ class Heap{
 			heap.add(e);
 			return;
 		}
+		
         heap.add(e);
 		int i = heap.size()-1;
 		int parent_index = (i-1)/2;
@@ -55,6 +80,7 @@ class Heap{
 		Element temp_parent = heap.get(parent_index);
 		int child_key = get_value(temp_child);
 		int parent_key = get_value(temp_parent);
+		
 		while(i > 0 && parent_key > child_key){
 			swap(parent_index, i);
 			i = parent_index;
@@ -70,19 +96,24 @@ class Heap{
 		if(heap.isEmpty()){
 			return;
 		}
+		
 		int size = heap.size()-1;
         heap.set(0, heap.get(size));
         heap.remove(size);
+		
 		if(heap.isEmpty()){
 			return;
 		}
+		
         int i = 0;
 		Element temp_parent = heap.get(i);
 		int parent_value = get_value(temp_parent);
 		int min_child = get_min_child(i);
 		Element temp_child = heap.get(min_child);
 		int child_value = get_value(temp_child);
+		
 		while(2*i+1 < size && child_value < parent_value){
+
 			swap(i,min_child);
 			i = min_child;
 			min_child = get_min_child(i);
@@ -103,15 +134,18 @@ class Heap{
 	//returns the index of which child is the smaller child, returns the same index if there are no children
 	private int get_min_child(int i){
 		Element temp_parent = heap.get(i);
+		
 		if(2*i+2 < heap.size()){
+			
 			Element left_child = heap.get(2*i+1);
 			Element right_child = heap.get(2*i+2);
+			
 			if(get_value(left_child) < get_value(right_child)){
 				return 2*i+1;
 			}else{
 				return 2*i+2;
 			}
-		}else if(2*i+1 < heap.size()-1){
+		}else if(2*i+1 <= heap.size()-1){
 			return 2*i+1;
 		}else{
 			return i;
